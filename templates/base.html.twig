@@ -1,0 +1,33 @@
+{# ------ attempt to read 'colors' from session ----- #}
+{% set colors = app.session.get('colors') %}
+
+{# ------ if 'null' then no found in session ----- #}
+{% if colors is null %}
+    {# ------ set our default colours array ----- #}
+    {% set colors = {
+        'foreground': 'black',
+        'background': 'white'
+    }
+    %}
+{% endif %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>MGW - {% block pageTitle %}{% endblock %}</title>
+
+    <style>
+        {% block stylesheets %}{% endblock %}
+
+        body {
+            color: {{ colors['foreground'] }};
+            background-color: {{ colors['background'] }};
+        }
+    </style>
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>
